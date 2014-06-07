@@ -1,0 +1,163 @@
+/* Global */
+
+body {
+    line-height: 1.1em;
+    overflow-y: hidden;
+}
+
+/* Login screen */
+
+#loginScreen .ui-content {
+    margin-top: 20px;
+    max-width: 350px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0;
+}
+
+#loginScreen .ui-field-contain, .ui-mobile fieldset.ui-field-contain {
+    padding: 0;
+    margin: 0;
+    border-bottom-width: 0;
+}
+
+#loginScreen .logo {
+    margin-left: auto;
+    margin-right: auto;
+    width: 125px;
+    height: 125px;
+    margin-bottom: 10px
+}
+
+#savedLoginsButton {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    margin: -14px .3125em 0;
+    border: 0;
+    background-color: transparent;
+}
+
+/*
+    Main screen
+*/
+@media all and (min-width: 900px) {
+    /* hide noteList button */
+    #noteListButton
+    {
+	display: none;
+    }
+    
+    #mainContent {
+	margin-left: 17em;
+    }
+    
+    #mainHeader, #mainFooter
+    {
+	left: 17em;
+	width: auto;
+    }
+    
+    #mainScreen .ui-panel-wrapper.ui-panel-page-content-position-left
+    {
+	left: 0em;
+    }
+    
+    #noteListPanel.ui-panel
+    {
+	top: 0;
+	left: 0;
+	width: 17em;
+	max-height: 100%;
+	visibility: visible;
+	transform: none;
+	-moz-transform: none;
+	-webkit-transform: none;
+	-webkit-transition: none;
+    }
+    
+    #noteListPanel.ui-panel-open {
+	left: 0;
+    }
+}
+
+#mainContent.ui-content
+{
+    padding: 5px;
+    overflow-y: hidden;
+}
+
+textarea#noteValue
+{
+    resize: none;
+    font-size: 14px;
+    overflow-y: auto;
+    width:100%;
+}
+
+#mainContent .ui-input-text {
+    margin: 0.1em 0;
+    border: none;
+    box-shadow: none;
+    background: transparent;
+}
+
+#noteTimestamp {
+    font-size: 0.8em;
+    font-weight: normal;
+    text-shadow: none;
+    color: #AFAFAF;
+}
+
+/* panel stuff */
+
+#noteListPanel.ui-panel-animate {
+    -webkit-transition: -webkit-transform 200ms ease;
+    -webkit-transition-duration: 200ms;
+    -moz-transition: -moz-transform 200ms ease;
+    transition: transform 200ms ease;
+}
+
+#noteListPanel.ui-panel-display-overlay {
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+
+#noteListPanel .ui-panel-inner {
+    position: absolute;
+    top: 35px;
+    left: 0;
+    right: 0;
+    bottom: 35px;
+    padding: 0;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+#noteListPanel .ui-panel-inner>.ui-listview-inset {
+    margin: 0;
+}
+
+#noteListFooter, #noteListHeader {
+    width: 17em;
+}
+
+#noteListFooter, #noteListHeader, #mainFooter, #mainHeader {
+    height: 35px;
+}
+
+#noteListContentWrapper {
+    margin-top: 35px;
+    margin-bottom: 35px;
+}
+
+/* servers screen */
+#serversScreen .ui-content,
+#editServerScreen .ui-content,
+#changePasswordScreen .ui-content
+{
+    max-width: 380px;
+    margin-left: auto;
+    margin-right: auto;
+}

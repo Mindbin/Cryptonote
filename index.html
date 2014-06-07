@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+    <head>
+	<title>Cryptonote</title>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	
+	<link rel="stylesheet" href="css/jquery.mobile-1.4.2.min.css" />
+	<link rel="stylesheet" href="css/jquery.mobile.theme-1.4.2.min.css" />
+	<link rel="stylesheet" href="css/jquery.mobile.icons.min.css" />
+	<link rel="stylesheet" href="css/layout.css" />
+	<link rel="stylesheet" href="css/design.css" />
+	
+	<script src="js/jquery-2.1.0.min.js"></script>
+	<script src="js/jquery.mobile-1.4.2.min.js"></script>
+	<script src="js/fastclick.js"></script>
+	<script src="js/date.format.js"></script>
+	<script src="js/cryptojs/rollups/sha3.js"></script>
+	<script src="js/cryptojs/rollups/aes.js"></script>
+	<script src="js/index.js"></script>
+    </head>
+    <body>
+	<!-- loginScreen -->
+	<div id="loginScreen" data-role="page">
+	    <div class="ui-content" role="main">
+		<div class="ui-bar ui-bar-a">
+		    <div class="logo">
+			<img src="css/images/logo-big.png" width="125px" height="125px"/>
+		    </div>
+		    <!--<div style="margin-top:150px;"></div>-->
+		    <form id="loginForm" onSubmit="return false;">
+			<p id="introText">To create a new user just type in your desired login name and password.</p>
+			<div class="ui-field-contain top">
+			    <input type="text" id="loginInput" data-clear-btn="true" autocomplete="off" placeholder="Enter login"/>
+			    <a id="savedLoginsButton" data-rel="popup" data-position="pop" data-role="button" data-icon="user" data-iconpos="notext" data-shadow="false">Logins</a>
+			</div>
+			<div class="ui-field-contain bottom">
+			    <input type="password" id="passwordInput" data-clear-btn="true" autocomplete="off" placeholder="Enter password"/>
+			</div>
+			
+			<fieldset data-role="controlgroup">
+			    <input type="checkbox" id="rememberLoginCheckbox">
+			    <label for="rememberLoginCheckbox">Remember login</label>
+			</fieldset>
+			
+			<div class="loginButton ui-field-contain">
+			    <input type="submit" id="loginButton" value="Login">
+			</div>
+		    </form>
+		</div>
+	    </div>
+	    
+	    <!-- loginFooter -->
+	    <div id="loginFooter" data-position="fixed" data-role="footer">
+		<div class="ui-btn-left">
+		    <a id="serversButton" data-role="button" data-icon="cloud" data-iconpos="notext">Servers</a>
+		</div>
+		
+		<span class="ui-title"></span>
+	    </div>
+	    <!-- /loginFooter -->
+	    
+	    <div id="savedLoginsPopup" data-role="popup">
+		<ul id="loginList" data-role="listview" data-split-icon="delete"></ul>
+	    </div>
+	</div>
+	<!-- /loginScreen -->
+	
+	<!-- serversScreen -->
+	<div id="serversScreen" data-role="page" data-title="Servers">
+	    <!-- serversHeader -->
+	    <div id="serversHeader" data-position="fixed" data-role="header">
+		<div class="ui-btn-left">
+		    <a id="serversBackButton" data-role="button" data-icon="carat-l" data-iconpos="notext" data-transition="slide" data-direction="reverse">Back</a>
+		</div>
+		
+		<span class="ui-title">Synchronize</span>
+		
+		<div class="ui-btn-right">
+		    <a id="serversEditButton" data-role="button">Edit</a>
+		    <a id="serversDoneButton" data-role="button" style="display:none;">Done</a>
+		</div>
+	    </div>
+	    <!-- /serversHeader -->
+	
+	    <div class="ui-content" role="main">
+		<ul id="serverList" data-role="listview"></ul>
+	    </div>
+	</div>
+	<!-- /serversScreen -->
+	
+	<!-- editServerScreen -->
+	<div id="editServerScreen" data-role="page" data-title="Servers">
+	    <!-- header -->
+	    <div id="editServerHeader" data-position="fixed" data-role="header">
+		<div class="ui-btn-left">
+		    <a id="editServerBackButton" data-role="button" data-icon="carat-l" data-iconpos="notext" data-transition="slide" data-direction="reverse">Servers</a>
+		</div>
+		
+		<span class="ui-title"></span>
+		
+		<div class="ui-btn-right">
+		    <a id="editServerSaveButton" data-role="button">Save</a>
+		</div>
+	    </div>
+	    <!-- /header -->
+	
+	
+	    <div class="ui-content" role="main">
+		<div class="ui-bar ui-bar-a">
+		    <form id="editServerForm">
+			<input type="hidden" name="id"/>
+			<div class="ui-field-contain top">
+			    <input type="text" name="name" placeHolder="Enter Name"/>
+			</div>
+			<div class="ui-field-contain bottom">
+			    <input type="text" name="url" placeHolder="Enter URL"/>
+			</div>
+		    </form>
+		</div>
+	    </div>
+	    
+	    <!-- footer -->
+	    <div id="editServerFooter" data-position="fixed" data-role="footer">
+		<span class="ui-title"></span>
+		
+		<div class="ui-btn-right">
+		    <a id="editServerDeletePopupButton" data-rel="popup" data-position="pop" data-role="button" data-icon="delete" data-iconpos="notext">Delete</a>
+		</div>
+	    </div>
+	    <!-- /header -->
+	    
+	    <div id="confirmDeleteServerPopup" data-role="popup" data-dismissible="false">
+		<div role="main" class="ui-content">
+		    <a id="editServerDeleteButton" href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-transition="flow">Delete</a>
+		    <a id="deleteServerPopupCancelButton" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b">Cancel</a>
+		</div>
+	    </div>
+	</div>
+	<!-- /editServerScreen -->
+	
+	<!-- mainScreen -->
+	<div id="mainScreen" data-role="page">
+	    <!-- mainHeader -->
+	    <div id="mainHeader" data-position="fixed" data-role="header">
+		<div class="ui-btn-left">
+		    <a id="noteListButton" data-role="button" data-icon="bars" data-iconpos="notext">Notes</a>
+		</div>
+		
+		<span class="ui-title" />
+	    </div>
+	    <!-- /mainHeader -->
+	    
+	    <!-- mainContent -->
+	    <div id="mainContent" data-role="content">
+		<input id="titleValue" type="text" class="title" placeHolder="Enter title ..."/>
+		<textarea id="noteValue" data-role="none" placeholder="Enter note ..."></textarea>
+	    </div>
+	    <!-- mainContent -->
+	    
+	    <!-- mainFooter -->
+	    <div id="mainFooter" data-position="fixed" data-role="footer">
+		    <span id="noteTimestamp" class="ui-title"></span>
+		    <div class="ui-btn-right">
+			<a id="noteDeletePopupButton" data-rel="popup" data-position="pop" data-role="button" data-icon="delete" data-iconpos="notext" style="display:none;">Delete</a>
+		    </div>
+	    </div>
+	    <!-- /mainFooter -->
+	    
+	    <!-- noteList -->
+	    <div id="noteListPanel" data-role="panel" data-position="left" data-display="overlay" data-position-fixed="true" data-animate="true">		
+		<!-- noteListHeader -->
+		<div id="noteListHeader" data-position="fixed" data-role="header">
+		    <div class="ui-btn-left">
+			<a id="logOutButton" data-role="button" data-icon="carat-l" data-iconpos="notext">Log out</a>
+		    </div>
+		    
+		    <span class="ui-title" />
+		    
+		    <div class="ui-btn-right">
+			<a id="newNoteButton" data-role="button" data-icon="plus" data-iconpos="notext">New</a>
+		    </div>
+		</div>
+		<!-- /noteListHeader -->
+		
+		<div class="ui-panel-inner">
+		    <div id="noteListContent">
+			<ul id="noteList" data-role="listview" data-inset="true" data-scroll="true"></ul>
+		    </div>
+		</div>
+		
+		<!-- noteListFooter -->
+		<div id="noteListFooter" data-position="fixed" data-role="footer">
+		    <div class="ui-btn-left">
+			<a id="settingsButton" data-role="button" data-icon="gear" data-iconpos="notext">Settings</a>
+		    </div>
+		    
+		    <span class="ui-title" />
+		    
+		    <div class="ui-btn-right">
+			<a id="syncButton" data-role="button" data-icon="recycle" data-iconpos="notext" style="display:none">Sync</a>
+		    </div>
+		</div>
+		<!-- /noteListFooter -->
+	    </div>
+	    <!-- /noteList -->
+	    
+	    <div id="confirmDeleteNotePopup" data-role="popup" data-dismissible="false">
+		<div role="main" class="ui-content">
+		    <div class="ui-field-contain">
+			<a id="deleteNoteButton" href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-transition="flow">Delete</a>
+		    </div>
+		    <div class="ui-field-contain">
+			<a id="deleteNotePopupCancelButton" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b">Cancel</a>
+		    </div>
+		</div>
+	    </div>
+	    
+	    <div id="settingsPopup" data-role="popup" data-dismissible="false">
+		<div role="main" class="ui-content">
+		    <div class="ui-field-contain">
+			<a id="changePasswordButton" href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-transition="flow">Change Password</a>
+		    </div>
+		    <div class="ui-field-contain">
+			<a id="changeServerButton" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b">Change Server</a>
+		    </div>
+		    <div class="ui-field-contain">
+			<a id="settingsCancelButton" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b">Cancel</a>
+		    </div>
+		</div>
+	    </div>
+	</div>
+	<!-- /mainScreen -->
+	
+	<div id="changePasswordScreen" data-role="page">
+	    <div id="changePasswordHeader" data-position="fixed" data-role="header">
+		<div class="ui-btn-left">
+		    <a id="changePasswordBackButton" data-role="button" data-icon="carat-l" data-iconpos="notext" data-transition="slide" data-direction="reverse">Back</a>
+		</div>
+		
+		<span class="ui-title">Password</span>
+		
+		<div class="ui-btn-right">
+		    <a id="changePasswordSaveButton" data-role="button">Save</a>
+		</div>
+	    </div>
+	    
+	    
+	    <div class="ui-content" role="main">
+		<div class="ui-bar ui-bar-a">
+		    <form id="editServerForm">
+			<input type="hidden" name="id"/>
+			<div class="ui-field-contain top">
+			    <input type="password" name="oldPassword" placeHolder="Old Password"/>
+			</div>
+			<div class="ui-field-contain">
+			    <input type="password" name="newPassword1" placeHolder="New Password"/>
+			</div>
+			<div class="ui-field-contain bottom">
+			    <input type="password" name="newPassword2" placeHolder="Repeat Password"/>
+			</div>
+		    </form>
+		</div>
+	    </div>
+	</div>
+    </body>
+</html>
